@@ -36,4 +36,4 @@
 - 精准节拍实现：使用C#的System.Timers.Timer.Elapsed事件 [Metronome.axaml.cs](/TunerAndMetronome/Views/Metronome.axaml.cs)
 
 ## 更多
-我编写了一篇文章，里面是关于整个开发过程的总结，同时也是对这方面的资料进行一些补充（我查相关资料的时候查得十分困难，chatGPT都不管用），感兴趣的欢迎查看
+我编写了一篇文章，里面是关于整个开发过程的总结，同时也是对这方面的资料进行一些补充（我查相关资料的时候查得十分困难，chatGPT都不管用），感兴趣的欢迎查看[使用C#开发跨平台调音器和节拍器(Windows&Android) - 知乎](https://zhuanlan.zhihu.com/p/678523647)
