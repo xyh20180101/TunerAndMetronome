@@ -1,0 +1,96 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:valueConverters="clr-namespace:TunerAndMetronome.ValueConverters"
+             xmlns:viewModels="clr-namespace:TunerAndMetronome.ViewModels"
+             mc:Ignorable="d"
+             x:Class="TunerAndMetronome.Views.Tuner"
+             Loaded="Control_OnLoaded"
+             Unloaded="Control_OnUnloaded">
+	<UserControl.Resources>
+		<valueConverters:DoubleToStringValueConverter x:Key="DoubleToStringValueConverter" />
+	</UserControl.Resources>
+	<ScrollViewer Margin="16">
+		<Grid VerticalAlignment="Center">
+			<StackPanel Orientation="Vertical">
+				<Grid x:Name="ScaleGrid" HorizontalAlignment="Stretch" MaxWidth="600">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<PathIcon
+                        Data="M480.335-304.615q7.588 0 13.011-5.443 5.423-5.442 5.423-13.211v-329.846q0-7.327-5.479-12.798-5.479-5.472-12.817-5.472-7.781 0-13.204 5.472-5.423 5.471-5.423 12.798v329.846q0 7.769 5.45 13.211 5.45 5.443 13.039 5.443Z"
+                        Foreground="Gray"
+                        Width="24"
+                        Height="24"
+                        Grid.Column="0" />
+					<PathIcon
+                        Data="M480.335-304.615q7.588 0 13.011-5.443 5.423-5.442 5.423-13.211v-329.846q0-7.327-5.479-12.798-5.479-5.472-12.817-5.472-7.781 0-13.204 5.472-5.423 5.471-5.423 12.798v329.846q0 7.769 5.45 13.211 5.45 5.443 13.039 5.443Z"
+                        Foreground="Gray"
+                        Width="24"
+                        Height="24"
+                        Grid.Column="1" />
+					<PathIcon
+                        Data="M480.335-304.615q7.588 0 13.011-5.443 5.423-5.442 5.423-13.211v-329.846q0-7.327-5.479-12.798-5.479-5.472-12.817-5.472-7.781 0-13.204 5.472-5.423 5.471-5.423 12.798v329.846q0 7.769 5.45 13.211 5.45 5.443 13.039 5.443Z"
+                        Foreground="Gray"
+                        Width="24"
+                        Height="24"
+                        Grid.Column="2" />
+					<Ellipse Fill="{Binding GreenPointFill,Mode=OneWay,DataType=viewModels:TunerViewModel}"
+                             x:Name="GreenPoint"
+                             Width="12"
+                             Height="12"
+                             Margin="{Binding GreenPointMargin,Mode=OneWay,DataType=viewModels:TunerViewModel}"
+                             HorizontalAlignment="Center"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="3" />
+				</Grid>
+				<Label x:Name="TuneLabel" Margin="0,8,0,0" FontSize="48" HorizontalAlignment="Center"
+                       Content="{Binding NoteName,Mode=OneWay,DataType=viewModels:TunerViewModel}" />
+				<Label x:Name="StandardFrequencyLabel" Margin="0,0,0,0" HorizontalAlignment="Center"
+                       Content="{Binding StandardFrequency,Mode=OneWay,DataType=viewModels:TunerViewModel}" />
+				<Label x:Name="FrequencyLabel" Margin="0,8,0,0" HorizontalAlignment="Center"
+                       Content="{Binding Frequency,Mode=OneWay,DataType=viewModels:TunerViewModel}" />
+				<ToggleSwitch x:Name="DebugSwitch" Margin="0,16,0,0" HorizontalAlignment="Center" Foreground="Gray"
+                              Content="Debug Mode" />
+
+				<!--Debug Mode Panel-->
+				<StackPanel IsVisible="{Binding IsChecked,ElementName=DebugSwitch}" Orientation="Vertical">
+					<Label Content="{Binding RecordingParams,Mode=OneWay,DataType=viewModels:TunerViewModel}" HorizontalAlignment="Center" />
+
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<Label VerticalAlignment="Center">Amp</Label>
+						<Slider x:Name="AmpSlider" VerticalAlignment="Center" Minimum="1" Maximum="20"
+                                IsSnapToTickEnabled="True" TickFrequency="1" Width="100"
+                                Value="{Binding Amp,Mode=TwoWay,DataType=viewModels:TunerViewModel}" />
+						<Label VerticalAlignment="Center" Content="{Binding Value,ElementName=AmpSlider}" />
+					</StackPanel>
+
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<Label VerticalAlignment="Center">NoiseGate</Label>
+						<Slider x:Name="NoiseGateSlider" VerticalAlignment="Center" Minimum="0" Maximum="0.1"
+                                IsSnapToTickEnabled="True" TickFrequency="0.005" Width="100"
+                                Value="{Binding NoiseGate,Mode=TwoWay,DataType=viewModels:TunerViewModel}" />
+						<Label VerticalAlignment="Center" Content="{Binding Value,ElementName=NoiseGateSlider,Converter={StaticResource DoubleToStringValueConverter}}" />
+					</StackPanel>
+
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<Label VerticalAlignment="Center">Volume</Label>
+						<ProgressBar x:Name="VolumeProgressBar" MaxWidth="50" VerticalAlignment="Center" Minimum="0"
+                                     Maximum="1" Value="{Binding Volume,Mode=OneWay,DataType=viewModels:TunerViewModel}" />
+						<Label VerticalAlignment="Center"
+                               Content="{Binding Volume,Converter={StaticResource DoubleToStringValueConverter},DataType=viewModels:TunerViewModel}" />
+					</StackPanel>
+
+					<CheckBox x:Name="InterpolationCheckBox" Content="Use interpolation" IsChecked="True"
+                              HorizontalAlignment="Center" />
+
+					<CheckBox x:Name="HideTooHighOrTooLowCheckBox" Content="Hide too high/low" IsChecked="True"
+                              HorizontalAlignment="Center" />
+				</StackPanel>
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
+</UserControl>

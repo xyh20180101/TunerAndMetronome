@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto"
+          package="com.WL.TunerAndMetronome">
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.RECORD_AUDIO" />
+	<application android:label="TunerAndMetronome" android:icon="@drawable/Icon" />
+	<uses-sdk android:minSdkVersion="21" />
+</manifest>

@@ -1,0 +1,89 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:TunerAndMetronome.ViewModels"
+             mc:Ignorable="d"
+             x:Class="TunerAndMetronome.Views.Metronome"
+             Unloaded="Control_OnUnloaded">
+	<UserControl.Resources>
+		<PathIcon x:Key="PlayIcon" Data="M320-273v-414q0-17 12-28.5t28-11.5q5 0 10.5 1.5T381-721l326 207q9 6 13.5 15t4.5 19q0 10-4.5 19T707-446L381-239q-5 3-10.5 4.5T360-233q-16 0-28-11.5T320-273Z"></PathIcon>
+		<PathIcon x:Key="StopIcon" Data="M240-320v-320q0-33 23.5-56.5T320-720h320q33 0 56.5 23.5T720-640v320q0 33-23.5 56.5T640-240H320q-33 0-56.5-23.5T240-320Z"></PathIcon>
+	</UserControl.Resources>
+	<UserControl.Styles>
+		<Style Selector="ToggleButton.MeterButton">
+			<Style.Setters>
+				<Setter Property="HorizontalContentAlignment" Value="Center" />
+				<Setter Property="Width" Value="40" />
+				<Setter Property="Margin" Value="2" />
+			</Style.Setters>
+		</Style>
+	</UserControl.Styles>
+	<ScrollViewer>
+		<Grid Margin="16">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" MinHeight="280" />
+			</Grid.RowDefinitions>
+
+			<!--Meter Buttons-->
+			<StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
+				<StackPanel Orientation="Horizontal">
+					<ToggleButton x:Name="MeterButton1" Classes="MeterButton" Click="MeterButton_OnClick">1/2</ToggleButton>
+					<ToggleButton x:Name="MeterButton2" Classes="MeterButton" Click="MeterButton_OnClick">2/2</ToggleButton>
+					<ToggleButton x:Name="MeterButton3" Classes="MeterButton" Click="MeterButton_OnClick">1/4</ToggleButton>
+					<ToggleButton x:Name="MeterButton4" Classes="MeterButton" Click="MeterButton_OnClick">2/4</ToggleButton>
+					<ToggleButton x:Name="MeterButton5" Classes="MeterButton" Click="MeterButton_OnClick">3/4</ToggleButton>
+					<ToggleButton x:Name="MeterButton6" Classes="MeterButton" Click="MeterButton_OnClick" IsChecked="True">4/4</ToggleButton>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<ToggleButton x:Name="MeterButton7" Classes="MeterButton" Click="MeterButton_OnClick">3/8</ToggleButton>
+					<ToggleButton x:Name="MeterButton8" Classes="MeterButton" Click="MeterButton_OnClick">4/8</ToggleButton>
+					<ToggleButton x:Name="MeterButton9" Classes="MeterButton" Click="MeterButton_OnClick">5/8</ToggleButton>
+					<ToggleButton x:Name="MeterButton10" Classes="MeterButton" Click="MeterButton_OnClick">6/8</ToggleButton>
+					<ToggleButton x:Name="MeterButton11" Classes="MeterButton" Click="MeterButton_OnClick">7/8</ToggleButton>
+					<ToggleButton x:Name="MeterButton12" Classes="MeterButton" Click="MeterButton_OnClick">8/8</ToggleButton>
+				</StackPanel>
+			</StackPanel>
+			<StackPanel Grid.Row="1">
+				<Label Content="Customize Beat" HorizontalAlignment="Center" />
+				<TextBox TextAlignment="Center" MaxWidth="400" HorizontalAlignment="Stretch" Margin="8"
+                         Text="{Binding MeterText,Mode=TwoWay,DataType=viewModels:MetronomeViewModel}" />
+				<ToggleButton x:Name="ApplyButton" HorizontalAlignment="Center" Click="ApplyButton_OnClick">Apply</ToggleButton>
+			</StackPanel>
+			<StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center">
+				<!--Bpm Slider-->
+				<Grid MaxWidth="400">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Label Grid.Column="0" Width="33" VerticalAlignment="Center" HorizontalContentAlignment="Right"
+                           Content="{Binding Minimum,ElementName=BpmSlider}" />
+					<Slider Grid.Column="1" x:Name="BpmSlider" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                            Margin="8,0"
+                            Minimum="10" Maximum="400" IsSnapToTickEnabled="True" TickFrequency="1"
+                            Value="{Binding Bpm,Mode=TwoWay,DataType=viewModels:MetronomeViewModel}"
+                            ValueChanged="BpmSlider_OnValueChanged" />
+					<Label Grid.Column="2" VerticalAlignment="Center" Content="{Binding Maximum,ElementName=BpmSlider}" />
+				</Grid>
+
+				<!--Bpm Label-->
+				<StackPanel Margin="8" Orientation="Horizontal" HorizontalAlignment="Center">
+					<RepeatButton x:Name="MinusFiveButton" Margin="8" Content="-5" Click="MinusFiveButton_OnClick" />
+					<RepeatButton x:Name="MinusOneButton" Margin="8" Content="-1" Click="MinusOneButton_OnClick" />
+					<Label Margin="8" FontSize="32" Width="70" HorizontalContentAlignment="Center"
+                           Content="{Binding Value,ElementName=BpmSlider}" />
+					<RepeatButton x:Name="PlusOneButton" Margin="8" Content="+1" Click="PlusOneButton_OnClick" />
+					<RepeatButton x:Name="PlusFiveButton" Margin="8" Content="+5" Click="PlusFiveButton_OnClick" />
+				</StackPanel>
+
+				<!--Play Button-->
+				<Button x:Name="PlayButton" Width="60" Height="60" CornerRadius="10" Margin="0,32,0,0"
+                        HorizontalAlignment="Center" Click="PlayButton_OnClick" />
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
+</UserControl>
